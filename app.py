@@ -1082,7 +1082,22 @@ def create_app():
     
     return app
 
+def allowed_file(filename):
+        return '.' in filename and \
+               filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+    
+    return app
+
+# -------------------------------------------------------------
+# ⬇️ MODIFICACIÓN CLAVE: Define 'app' globalmente para Gunicorn ⬇️
+
+app = create_app()
+
+# -------------------------------------------------------------
+# ⬇️ El bloque 'if __name__' ahora solo llama al método run. ⬇️
+
 if __name__ == '__main__':
-    app = create_app()
+    # Ya no necesitas llamar a create_app() aquí, solo corres la app global.
     app.run(debug=True)
+
 
